@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <title>Weather Station Web UI</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    </head>
+
+    <body ng-controller="BodyController">
+        <section class="container">
+            <div class="row">
+                <div class="col">
+                    <h1>Weather Station Web UI</h1>
+                </div>
+            </div>
+
+            <div class="row" ng-repeat="screen in screens" style="margin: 2rem 0;">
+                <div class="col">
+                    <h3>{$ screen.name $}</h3>
+                    <img style="border: 1px solid #000;" class="img-fluid" ng-src="/api/preview/{$ screen.type $}" alt="preview" />
+                </div>
+                <div class="col">
+                    <button class="btn btn-primary">Use this</button>
+                    <div></div>
+                    <button class="btn btn-warning">Pre-render</button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+<!--                    <button class="btn btn-success btn-block btn-lg" ng-click="refresh()">Refresh</button>-->
+                    <async-button state-active="Refreshing" state-inactive="Refresh" ng-click="refresh()" loading="uiStates.refreshing"></async-button>
+                    <div></div>
+                    <async-button state-active="Loading" state-inactive="Get current" ng-click="refresh()" loading="uiStates.refreshing"></async-button>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 3rem;">
+                <div class="col">
+                    <form enctype="multipart/form-data">
+                        <div class="input-group mb-3">
+                          <div class="custom-file">
+                            <input name="file" file-input="file" type="file" class="custom-file-input" id="inputGroupFile02">
+                            <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                          </div>
+                          <div class="input-group-append">
+                            <button class="btn btn-primary" id="" ng-click="uploadImage()">Upload</button>
+                          </div>
+                        </div>
+                        <div>
+                            File: {$ file.name $}
+                        </div>
+                    </form>
+                    <img class="img-fluid" ng-src="{$imageUrl$}" alt="nothing" style="border: 1px solid #000;" />
+                    <async-button ng-if="!!imageUrl" override-class="btn btn-success btn-block" state-active="Refreshing" state-inactive="Show this" ng-click="displayLastImage()" loading="uiStates.refreshing"></async-button>
+                    <div style="margin-top: 3rem;"></div>
+                </div>
+            </div>
+        </section>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+        <script src="/static/app/main.js" type="module"></script>
+    </body>
+</html>

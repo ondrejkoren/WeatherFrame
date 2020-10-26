@@ -1,0 +1,15 @@
+<button class="btn"
+        ng-show="!$ctrl.loading"
+        ng-class="$ctrl.overrideClass ? $ctrl.overrideClass : 'btn-success'"
+        ng-disabled="$ctrl.disabled || $ctrl.longDisabledString">
+    {{ $ctrl.stateInactive }}
+    <ng-transclude></ng-transclude>
+</button>
+<span ng-if="$ctrl.disabled || $ctrl.longDisabledString" ng-click="$ctrl.nop(); $event.stopPropagation(); $event.preventDefault();">
+    <i ng-if="$ctrl.disabledIncludeSpinner" class="fa fa-fw fa-spin fa-spinner"></i> <i>{{ $ctrl.disabledReason }}</i>
+</span>
+<button class="btn" disabled="disabled"
+        ng-show="$ctrl.loading"
+        ng-class="$ctrl.overrideClass ? $ctrl.overrideClass : 'btn-success'">
+    <i class="fa fa-fw fa-spin fa-spinner"></i> {{ $ctrl.stateActive }}...
+</button>
